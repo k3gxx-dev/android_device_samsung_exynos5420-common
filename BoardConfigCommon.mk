@@ -90,8 +90,8 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000
 DEVICE_MANIFEST_FILE := $(COMMON_PATH)/manifest.xml
 
 # Kernel
-TARGET_LINUX_KERNEL_VERSION := 3.4
-TARGET_KERNEL_SOURCE := kernel/samsung/exynos5420
+TARGET_LINUX_KERNEL_VERSION ?= 3.4
+TARGET_KERNEL_SOURCE ?= kernel/samsung/exynos5420
 TARGET_KERNEL_ADDITIONAL_FLAGS := \
     HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument"
 
@@ -108,15 +108,22 @@ BOARD_ROOT_EXTRA_FOLDERS := efs persist
 BOARD_VENDOR := samsung
 TARGET_BOARD_PLATFORM := exynos5
 TARGET_SLSI_VARIANT := bsp
-TARGET_SOC := exynos5420
-TARGET_BOOTLOADER_BOARD_NAME := universal5420
+TARGET_SOC ?= exynos5420
+
+# Select the 5422 board name only when a child device did not override it.
+ifeq ($(TARGET_SOC),exynos5422)
+  ifeq ($(origin TARGET_BOOTLOADER_BOARD_NAME),undefined)
+    TARGET_BOOTLOADER_BOARD_NAME := universal5422
+  endif
+endif
+TARGET_BOOTLOADER_BOARD_NAME ?= universal5420
 
 # Power
 TARGET_POWERHAL_VARIANT := samsung
 
 # Recovery
 BOARD_RECOVERY_SWIPE := true
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/ramdisk/etc/fstab.universal5420
+TARGET_RECOVERY_FSTAB ?= $(COMMON_PATH)/ramdisk/etc/fstab.universal5420
 BOARD_RAMDISK_USE_XZ := true
 TARGET_RECOVERY_DENSITY := xhdpi
 

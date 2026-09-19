@@ -148,6 +148,24 @@ PRODUCT_PACKAGES +=  \
     InProcessNetworkStack \
     com.android.tethering.inprocess
 
+# SoC-specific CPU and thermal policy.
+# Frequencies are expressed in kHz; thermal trip frequencies use MHz because
+# that is the unit expected by the Exynos thermal sysfs interface. Keep the
+# 5420 defaults unchanged so existing tablets retain their original policy.
+ifeq ($(TARGET_SOC),exynos5422)
+    TARGET_CPU_BIG_CLUSTER_MAX_FREQ ?= 2100000
+    TARGET_CPU_LITTLE_CLUSTER_MAX_FREQ ?= 1500000
+    TARGET_THERMAL_CPU_FREQS ?= 2100 1900 1500 600
+else
+    TARGET_CPU_BIG_CLUSTER_MAX_FREQ ?= 1900000
+    TARGET_CPU_LITTLE_CLUSTER_MAX_FREQ ?= 1300000
+    TARGET_THERMAL_CPU_FREQS ?= 1800 1700 1200 600
+endif
+
+# Export the selected limits for SoC-specific power HAL and ramdisk profiles.
+TARGET_POWERHAL_BIG_CLUSTER_MAX_FREQ ?= $(TARGET_CPU_BIG_CLUSTER_MAX_FREQ)
+TARGET_POWERHAL_LITTLE_CLUSTER_MAX_FREQ ?= $(TARGET_CPU_LITTLE_CLUSTER_MAX_FREQ)
+
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power@1.0-service.universal5420
