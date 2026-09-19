@@ -183,4 +183,4 @@ WIFI_DRIVER_FW_PATH_AP           := "/system/etc/wifi/bcmdhd_apsta.bin"
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 
 # Inherit from the proprietary version
-include vendor/samsung/universal5420-common/BoardConfigVendor.mk
+-include vendor/samsung/universal5420-common/BoardConfigVendor.mk
