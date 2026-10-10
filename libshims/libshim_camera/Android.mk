@@ -1,5 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
+# Only compile if not already provided by vendor/samsung/k3gxx/camera submodule
+ifeq ($(wildcard vendor/samsung/k3gxx/camera/Android.mk),)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := camera_shim.cpp
@@ -28,3 +30,4 @@ LOCAL_C_INCLUDES += \
 	$(TOP)/bionic
 
 include $(BUILD_SHARED_LIBRARY)
+endif

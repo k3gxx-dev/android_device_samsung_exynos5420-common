@@ -15,6 +15,8 @@
 
 LOCAL_PATH := $(call my-dir)
 
+# Only compile if not already provided by vendor/samsung/k3gxx/gpu submodule
+ifeq ($(wildcard vendor/samsung/k3gxx/gpu/Android.mk),)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := popcountsi2.c process_name.c
@@ -25,3 +27,4 @@ LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_VENDOR_MODULE := true
 
 include $(BUILD_SHARED_LIBRARY)
+endif
