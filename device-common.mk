@@ -225,10 +225,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.exynos5420 \
     android.hardware.sensors@1.0-service.exynos5420 \
-    sensors.exynos5
-
-PRODUCT_COPY_FILES += \
-    $(COMMON_PATH)/hardware/sensors/_hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/_hals.conf
+    sensors.exynos5 \
+    sensors.multihal.exynos5.conf
 
 # Shims
 PRODUCT_PACKAGES += \

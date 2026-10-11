@@ -16,6 +16,21 @@
 
 LOCAL_PATH := device/samsung/universal5420-common
 
+ifneq ($(filter exynos5420 exynos5422,$(TARGET_SOC)),)
+include $(CLEAR_VARS)
+LOCAL_MODULE := sensors.multihal.exynos5.conf
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_STEM := _hals.conf
+LOCAL_VENDOR_MODULE := true
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR_ETC)/sensors
+LOCAL_PREBUILT_MODULE_FILE := $(if $(strip $(BOARD_SENSORS_MULTI_HAL_CONFIG)),$(strip $(BOARD_SENSORS_MULTI_HAL_CONFIG)),$(LOCAL_PATH)/hardware/sensors/_hals.conf)
+ifeq ($(wildcard $(LOCAL_PREBUILT_MODULE_FILE)),)
+$(error Sensor multihal configuration not found: $(LOCAL_PREBUILT_MODULE_FILE))
+endif
+include $(BUILD_PREBUILT)
+endif
+
 ifneq ($(filter chagalllte chagallltetmo chagallwifi ha3g klimtlte klimtltecan klimttd klimtwifi n1awifi n1a3g n2awifi v1a3g v1awifi v2awifi, $(TARGET_DEVICE)),)
 
   subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
